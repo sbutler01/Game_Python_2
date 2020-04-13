@@ -1,5 +1,0 @@
-figure out how to find None values in the list
-
-(figured out on the 'test' script)
-
-figure out why its adding all the platforms at once

@@ -113,7 +113,6 @@ class Game:
 		#determine whether you've already died to start music
 		self.died_already = False
 
-
 	def load(self):
 		self.dir = path.dirname(__file__)
 		self.spritesheet = SpriteSheet(path.join(self.dir, spritesheet_01))
@@ -124,6 +123,7 @@ class Game:
 		#can set beginning parameters like score
 		self.screen = pg.display.set_mode((width, height))
 		self.platforms_added = checkpoint
+		self.checkpoints_reached = checkpoint
 		self.gameoverscreen = False
 
 
@@ -178,8 +178,10 @@ class Game:
 		self.add_platforms_up = False
 		self.distance_since_added = (width+1)/2
 
+		#moving in x direction
 		self.on_moving_platform = False
-
+		#moving in y direction
+		self.on_moving_platform_2 = False
 
 		#start running the game
 		self.run()
@@ -208,13 +210,16 @@ class Game:
 			contact_platform = pg.sprite.spritecollide(self.Player, self.platforms_onscreen, False)
 			self.Player.rect.y -= 1
 
+			if contact_platform and self.distance_since_added > width/2:
+				self.checkpoints_reached = self.platforms_added
+
 			if contact_platform and contact_platform[0].movement_x != 0:
-					self.Player.position.x += contact_platform[0].velocity_x
-					self.on_moving_platform = True
+				self.Player.position.x += contact_platform[0].velocity_x
+				self.on_moving_platform = True
 
 			if contact_platform and contact_platform[0].movement_y != 0:
-					self.Player.position.y += contact_platform[0].velocity_y
-					self.on_moving_platform = True
+				self.platform_velocity = contact_platform[0].velocity_y
+				self.on_moving_platform_2 = True
 
 			if self.on_moving_platform:
 				self.velocity_player = self.Player.velocity.x
@@ -401,6 +406,12 @@ class Game:
 			self.Player.velocity.x = self.velocity_player
 			self.on_moving_platform = False
 
+		if self.Player.velocity.y >= 3:
+			self.on_moving_platform_2 = False
+
+		if self.on_moving_platform_2:
+			self.Player.position.y += self.platform_velocity
+
 		if int(self.Player.velocity.x) >= 0:
 				background_farthest = 0
 				count = 0
@@ -440,12 +451,7 @@ class Game:
 
 			self.died_already = True
 
-			if self.distance_since_added > width/2:
-				self.new(self.platforms_added)
-			elif self.platforms_added > 0:
-				self.new(self.platforms_added - 1)
-			else:
-				self.new(0)
+			self.new(self.checkpoints_reached)
 
 			self.playing = False
 
@@ -478,8 +484,10 @@ class Game:
 			if event.type == pg.KEYDOWN:
 				if event.key == pg.K_SPACE:
 					self.Player.jump()
+					self.on_moving_platform_2 = False
 				if event.key == pg.K_UP:
 					self.Player.jump()
+					self.on_moving_platform_2 = False
 
 			if event.type == pg.KEYUP:
 				if event.key == pg.K_SPACE:

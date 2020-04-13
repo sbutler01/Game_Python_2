@@ -179,7 +179,9 @@ class Player(pg.sprite.Sprite):
 		if collision_platform and not self.jumping:
 			self.velocity.y = -player_jump
 			self.jumping = True
-
+		elif self.game.on_moving_platform_2:
+			self.velocity.y = -player_jump
+			self.jumping = True
 
 	def jump_cut(self):
 		if self.jumping:
@@ -228,10 +230,10 @@ class Player(pg.sprite.Sprite):
 	def animate(self):
 		time_current = pg.time.get_ticks()
 
-		if int(self.velocity.y) > 0 and self.rightfacing:
+		if int(self.velocity.y) > 0 and self.rightfacing and not self.game.on_moving_platform_2:
 			self.image = self.frames_falling_right[0]
 
-		elif int(self.velocity.y) > 0:
+		elif int(self.velocity.y) > 0 and not self.game.on_moving_platform_2:
 			self.image = self.frames_falling_left[0]
 
 		if self.scrambling and self.rightfacing:

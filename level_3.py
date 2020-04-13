@@ -55,15 +55,26 @@ projectile_gravity = 0.5
 projectile_airres = 0.01
 
 #platform properties
-position_platforms_0 = [(50.1,300,800,10,None,None,None),
-						(50,500,800,10,None,None,None)]
+position_platforms_0 = [(50.1,500,600,10,None,None,None),
+						(900,300,600,10,None,None,None),
+						(1300.1,550,200,10,None,None,None)]
 
-position_enemies_0 = [0,1]
-type_enemies_0 = [0,1]
-position_enemy_pos_0 = [600,600]
+position_enemies_0 = [1,1]
+type_enemies_0 = [1,0]
+position_enemy_pos_0 = [450,525]
+
+position_platforms_1 = [(0,100,100,10,None,None,None),
+						(200,400,600,10,None,None,None),
+						(900,150,150,10,None,None,None),
+						(1300,300,150,10,None,None,None),
+						(1000.1,550,100,10,(800,1300),None,3)]
+
+position_enemies_1 = [2,2,3,3]
+type_enemies_1 = [1,0,0,1]
+position_enemy_pos_1 = [25,75,25,75]
 
 
-platforms_all = [position_platforms_0]
-enemypositions_all = [position_enemies_0]
-enemytypes_all = [type_enemies_0]
-enemypos_all = [position_enemy_pos_0]
+platforms_all = [position_platforms_0,position_platforms_1]
+enemypositions_all = [position_enemies_0,position_enemies_1]
+enemytypes_all = [type_enemies_0,type_enemies_1]
+enemypos_all = [position_enemy_pos_0,position_enemy_pos_1]

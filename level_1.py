@@ -42,7 +42,7 @@ enemy_speed = 2
 enemy_layer = 3
 
 #platform properties
-position_platforms_0 = [(50,400,800,10, None, None, None),
+position_platforms_0 = [(50,400,800,10, None, (200,500), 2),
 						(1000, 550, 500, 10, None, None, None),
 						(1600, 300, 300, 10, None, None, None),
 						(2000, 200, 300, 10, None, None, None)]
